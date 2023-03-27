@@ -57,38 +57,30 @@ int main() {
 	secondfile.open(secondpath, open_mode);
 	FileMatch** match = new FileMatch * [3] {
 		new FileMatch(),
-		new FileMatch(firstpath, secondpath),
-		new FileMatch(firstpath, secondpath, open_mode),
+			new FileMatch(firstpath, secondpath),
+			new FileMatch(firstpath, secondpath, open_mode),
 	};
 	if (firstfile.is_open() && secondfile.is_open())
 	{
-		cout << "The lines isn`t mutch in files:"<<endl;
+		cout << "The lines isn`t mutch in files:" << endl;
 		while (getline(firstfile, firline) && getline(secondfile, secline)) {
-			
+
 			if (firline != secline) {
-				cout << firline<<endl;
+				cout << firline << endl;
 			}
-			
 			if (secline != firline) {
 				cout << secline << endl;
 			}
-			
+
 		}
-		//cout << endl;
-		//cout << "The lines isn`t mutch in second file:"<<endl;
-		//while (getline(secondfile, secline) && getline(firstfile, firline)) {
-		//	if (secline != firline) {
-		//		cout << secline << endl;
-		//	}
-		//}
 		firstfile.close();
 		secondfile.close();
-		
+
 	}
 	else
 	{
 		cout << "File didn`t open" << endl;
 	}
 
-	return 0;					
+	return 0;
 };
