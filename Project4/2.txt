@@ -1,0 +1,5 @@
+Number of characters: 139
+Number of rows: 3
+Number of vowels: 37
+Number of consonants: 61
+Number of numbers: 11

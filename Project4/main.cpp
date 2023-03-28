@@ -17,14 +17,14 @@ public:
 	void setOpenMode(ios_base::open_mode open_mode) { this->open_mode = open_mode; }
 	//geters
 	ios_base::open_mode getOpenMode() { return open_mode; }
-	string getFirPath(){ return firstpath; }
+	string getFirPath() { return firstpath; }
 	string getSecPath() { return secondpath; }
 	//constructors
 	FileMatch()
 	{
-		setFirPath( "text.txt");
+		setFirPath("text.txt");
 		setSecPath("text.txt");
-		setOpenMode( ios::in);
+		setOpenMode(ios::in);
 	}
 	FileMatch(string firstpath, string secondpath) :FileMatch()
 	{
@@ -39,56 +39,62 @@ public:
 	~FileMatch() {
 		firstpath.clear();
 		secondpath.clear();
-		open_mode=0;
+		open_mode = 0;
 		firstfile.close();
 		secondfile.close();
 	}
-	
+
 
 };
 
 int main() {
-	string firstpath = "C:\\Users\\yaros\\source\\repos\\Project4\\1.txt";
-	string secondpath = "C:\\Users\\yaros\\source\\repos\\Project4\\2.txt";
+	string firstpath = "C:\\Users\\yaros\\source\\repos\\Project4\\Project4\\1.txt";
+	string secondpath ="C:\\Users\\yaros\\source\\repos\\Project4\\Project4\\2.txt" ;
 	string firline, secline;
+	char* firline2;
+	int len = 2,row=0,vow=0, cons=0,num=0;
 	fstream firstfile, secondfile;
 	std::ios_base::openmode open_mode = ios::in;
-	firstfile.open(firstpath, open_mode);
-	secondfile.open(secondpath, open_mode);
+	firstfile.open(firstpath, ios::in);
+	secondfile.open(secondpath, ios::out);
 	FileMatch** match = new FileMatch * [3] {
 		new FileMatch(),
-		new FileMatch(firstpath, secondpath),
-		new FileMatch(firstpath, secondpath, open_mode),
+			new FileMatch(firstpath, secondpath),
+			new FileMatch(firstpath, secondpath, open_mode),
 	};
 	if (firstfile.is_open() && secondfile.is_open())
 	{
-		cout << "The lines isn`t mutch in files:"<<endl;
-		while (getline(firstfile, firline) && getline(secondfile, secline)) {
-			
-			if (firline != secline) {
-				cout << firline<<endl;
+		int i = 0;
+		string firline;
+		while (getline(firstfile, firline)) {
+			row += 1;
+			for (char litera : firline) {
+				len++;
+				if (litera == 'a' || litera == 'e' || litera == 'i' || litera == 'o' || litera == 'u' ||
+					litera == 'A' || litera == 'E' || litera == 'I' || litera == 'O' || litera == 'U') {
+					vow++;
+				}
+				else if ((litera >= 'a' && litera <= 'z') || (litera >= 'A' && litera <= 'Z')) {
+					cons++;
+				}
+				else if (litera >= '0' && litera <= '9') {
+					num++;
+				}
 			}
-			
-			if (secline != firline) {
-				cout << secline << endl;
-			}
-			
 		}
-		//cout << endl;
-		//cout << "The lines isn`t mutch in second file:"<<endl;
-		//while (getline(secondfile, secline) && getline(firstfile, firline)) {
-		//	if (secline != firline) {
-		//		cout << secline << endl;
-		//	}
-		//}
-		firstfile.close();
-		secondfile.close();
 		
+		firstfile.close();
+		secondfile << "Number of characters: " << len <<endl;
+		secondfile << "Number of rows: " << row << endl;
+		secondfile << "Number of vowels: " << vow << endl;
+		secondfile << "Number of consonants: " << cons << endl;
+		secondfile << "Number of numbers: " << num << endl;
+		secondfile.close();
 	}
 	else
 	{
 		cout << "File didn`t open" << endl;
 	}
 
-	return 0;					
+	return 0;
 };
