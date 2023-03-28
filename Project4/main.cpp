@@ -48,13 +48,14 @@ public:
 };
 
 int main() {
-	string firstpath = "C:\\Users\\yaros\\source\\repos\\Project4\\1.txt";
-	string secondpath = "C:\\Users\\yaros\\source\\repos\\Project4\\2.txt";
+	string firstpath = "C:\\Users\\yaros\\source\\repos\\Project4\\Project4\\1.txt";
+	string secondpath = "C:\\Users\\yaros\\source\\repos\\Project4\\Project4\\2.txt";
 	string firline, secline;
 	fstream firstfile, secondfile;
+	unsigned int num=0;
 	std::ios_base::openmode open_mode = ios::in;
-	firstfile.open(firstpath, open_mode);
-	secondfile.open(secondpath, open_mode);
+	firstfile.open(firstpath, ios::in);
+	secondfile.open(secondpath, ios::out);
 	FileMatch** match = new FileMatch * [3] {
 		new FileMatch(),
 		new FileMatch(firstpath, secondpath),
@@ -62,25 +63,22 @@ int main() {
 	};
 	if (firstfile.is_open() && secondfile.is_open())
 	{
-		cout << "The lines isn`t mutch in files:"<<endl;
-		while (getline(firstfile, firline) && getline(secondfile, secline)) {
-			
-			if (firline != secline) {
-				cout << firline<<endl;
+		cout << "Enter distant from it in the alphabet by a fixed number positions: ";
+		cin >> num;
+		string shifr;
+		
+		while (getline(firstfile,firline)) {
+			for (char x:firline)
+			{
+				if (x >= 'a' && x <= 'z' || x >= 'A' && x <= 'Z') {
+					shifr +=x + num;
+				}
+				else {
+					shifr += x;
+				}
 			}
-			
-			if (secline != firline) {
-				cout << secline << endl;
-			}
-			
 		}
-		//cout << endl;
-		//cout << "The lines isn`t mutch in second file:"<<endl;
-		//while (getline(secondfile, secline) && getline(firstfile, firline)) {
-		//	if (secline != firline) {
-		//		cout << secline << endl;
-		//	}
-		//}
+		secondfile << shifr << " ";
 		firstfile.close();
 		secondfile.close();
 		
